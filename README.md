@@ -4,9 +4,9 @@
 by Mahesh Chandra Mukkamala, Peter Ochs, Thomas Pock and Shoham Sabach.
 
 ## Related Repositories:
-####[CoCaIn BPG escapes Spurious Stationary Points](https://github.com/mmahesh/cocain-bpg-escapes-spurious-stationary-points)
+**[CoCaIn BPG escapes Spurious Stationary Points](https://github.com/mmahesh/cocain-bpg-escapes-spurious-stationary-points)**
 
-####[CoCaIn BPG for Matrix Factorization](https://github.com/mmahesh/cocain-bpg-matrix-factorization)
+**[CoCaIn BPG for Matrix Factorization](https://github.com/mmahesh/cocain-bpg-matrix-factorization)**
 
 
 
