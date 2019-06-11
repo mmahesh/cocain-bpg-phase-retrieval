@@ -3,6 +3,13 @@
 ## [Convex-Concave Backtracking for Inertial Bregman Proximal Gradient Algorithms in Non-Convex Optimization](https://arxiv.org/abs/1904.03537) 
 by Mahesh Chandra Mukkamala, Peter Ochs, Thomas Pock and Shoham Sabach.
 
+## Related Repositories:
+####[CoCaIn BPG escapes Spurious Stationary Points](https://github.com/mmahesh/cocain-bpg-escapes-spurious-stationary-points)
+
+####[CoCaIn BPG for Matrix Factorization](https://github.com/mmahesh/cocain-bpg-matrix-factorization)
+
+
+
 
 ## Algorithms Implemented:
 
@@ -53,9 +60,6 @@ In **fun_num**  2 : Squared L2-Regularization is used.
     journal      = {ArXiv e-prints, arXiv:1904.03537},
     }
 
-## [Related work: CoCaIn BPG for Matrix Factorization](https://github.com/mmahesh/cocain-bpg-matrix-factorization)
-## [Related work: CoCaIn BPG escapes Spurious Stationary Points](https://github.com/mmahesh/cocain-bpg-escapes-spurious-stationary-points)
-
 
 ## Contact 
 Mahesh Chandra Mukkamala (mukkamala@math.uni-sb.de)
@@ -64,9 +68,9 @@ Mahesh Chandra Mukkamala (mukkamala@math.uni-sb.de)
 
 M. C. Mukkamala, P. Ochs, T. Pock, and S. Sabach: Convex-Concave Backtracking for Inertial Bregman Proximal Gradient Algorithms in Non-Convex Optimization. ArXiv e-prints, arXiv:1904.03537, 2019.
 
-P. Ochs, J. Fadili, and T. Brox. Non-smooth non-convex bregman minimization: Unification and new algorithms. Journal of Optimization Theory and Applications, 181(1):244–278, 2019.
+P. Ochs, J. Fadili, and T. Brox. Non-smooth Non-convex Bregman Minimization: Unification and  New Algorithms. Journal of Optimization Theory and Applications, 181(1):244–278, 2019.
 
-J. Bolte, S. Sabach, M. Teboulle, and Y. Vaisbourd. First order methods beyond convexity and Lipschitz gradient continuity with applications to quadratic inverse problems. SIAM Journal on Optimization, 28(3):2131–2151, 2018.
+J. Bolte, S. Sabach, M. Teboulle, and Y. Vaisbourd. First Order Methods Beyond Convexity and Lipschitz Gradient Continuity with Applications to  Quadratic Inverse Problems. SIAM Journal on Optimization, 28(3):2131–2151, 2018.
 
 
 ## License
