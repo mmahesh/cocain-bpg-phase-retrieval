@@ -57,16 +57,20 @@ def grad(A,b, U,  lam, fun_num=1):
 def abs_func(A,b, U, U1, lam, abs_fun_num=1, fun_num=1):
 	if abs_fun_num == 1:
 		G = grad(A,b, U1, lam, fun_num=fun_num)
-		return main_func(A,b, U1, lam, fun_num=fun_num) + np.sum(np.multiply(U-U1,G))
-		-lam*(np.sum(np.abs(U1))) + lam*(np.sum(np.abs(U)))
+		return main_func(A,b, U1, lam, fun_num=fun_num)\
+							+ np.sum(np.multiply(U-U1,G)) \
+							-lam*(np.sum(np.abs(U1))) + lam*(np.sum(np.abs(U)))
 	if abs_fun_num == 2:
 		G = grad(A,b, U1, lam, fun_num=fun_num)
-		return main_func(A,b, U1, lam, fun_num=fun_num) + np.sum(np.multiply(U-U1,G))-lam*(U1.T.dot(U1))+lam*(U.T.dot(U))
+		return main_func(A,b, U1, lam, fun_num=fun_num) \
+				+ np.sum(np.multiply(U-U1,G))-lam*(U1.T.dot(U1))+lam*(U.T.dot(U))
 	
 def breg( U, U1, breg_num=1, A=1,b=1, lam=1):
 	if breg_num==1:
 		grad_U1 = (np.sum(np.multiply(U1,U1)))*U1 + U1
-		temp =  0.25*(np.linalg.norm(U)**4) + 0.5*(np.linalg.norm(U)**2) - 0.25*(np.linalg.norm(U1)**4) - 0.5*(np.linalg.norm(U1)**2) - np.sum(np.multiply(U-U1,grad_U1))
+		temp =  0.25*(np.linalg.norm(U)**4) + 0.5*(np.linalg.norm(U)**2) \
+				- 0.25*(np.linalg.norm(U1)**4) - 0.5*(np.linalg.norm(U1)**2)\
+				- np.sum(np.multiply(U-U1,grad_U1))
 		if temp >=1e-15:
 			return temp
 		else:
