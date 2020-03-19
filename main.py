@@ -138,6 +138,25 @@ def find_gamma(A, b, U, prev_U, uL_est, lL_est):
 	return y_U, gamma
 
 
+# def find_closed_gamma(A, b, U, prev_U, uL_est, lL_est):
+# 	# Finding the inertial parameter gamma
+
+# 	kappa = (del_val - eps_val)*(uL_est/(uL_est+lL_est))
+	
+
+# 	Delta_val = np.linalg.norm(U-prev_U)**2
+# 	print(Delta_val)
+# 	if Delta_val <0:
+# 		y_U = U
+# 		gamma = 0
+# 	else:
+# 		temp_var = (1.5*Delta_val + (7/4) )*(np.linalg.norm(U)**2)
+# 		gamma = np.sqrt(kappa*breg(prev_U, U,\
+# 				 breg_num=breg_num, A=A, b=b, lam=lam)/temp_var)
+# 		y_U = U + gamma*(U-prev_U)
+# 	return y_U, gamma
+
+
 def find_closed_gamma(A, b, U, prev_U, uL_est, lL_est):
 	# Finding the inertial parameter gamma
 
@@ -146,16 +165,15 @@ def find_closed_gamma(A, b, U, prev_U, uL_est, lL_est):
 
 	Delta_val = np.linalg.norm(U-prev_U)**2
 	print(Delta_val)
-	if Delta_val <0:
+	if Delta_val <=0:
 		y_U = U
 		gamma = 0
 	else:
-		temp_var = (1.5*Delta_val + (7/4) )*(np.linalg.norm(U)**2)
+		temp_var = (3*(np.linalg.norm(U)**2) + (7/2) )*Delta_val
 		gamma = np.sqrt(kappa*breg(prev_U, U,\
 				 breg_num=breg_num, A=A, b=b, lam=lam)/temp_var)
 		y_U = U + gamma*(U-prev_U)
 	return y_U, gamma
-
 
 def do_lb_search(A, b, U, U1, lam, uL_est, lL_est, closed_form=0):
 	# Lower bound backtracking

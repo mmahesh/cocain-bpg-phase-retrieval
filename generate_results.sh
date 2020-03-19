@@ -9,7 +9,3 @@ python main.py --fun_num=2 --abs_fun_num=2 --algo=2
 python main.py --fun_num=2 --abs_fun_num=2 --algo=3
 python main.py --fun_num=2 --abs_fun_num=2 --algo=4
 python main.py --fun_num=2 --abs_fun_num=2 --algo=5
-
-
-
-
