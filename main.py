@@ -147,8 +147,8 @@ def make_update_new(y, grad, uL_est, option=0):
 	K = K.T
 	# param value
 	L_pdhg = np.linalg.norm(K)
-	tau = 2000/L_pdhg
-	sigma = 0.99/(L_pdhg*2000)
+	tau = 200/L_pdhg
+	sigma = 0.9/(L_pdhg*200)
 
 	# primal variables
 	x_1 = y.copy()
@@ -165,10 +165,9 @@ def make_update_new(y, grad, uL_est, option=0):
 		c_2 = c_1 + 1
 
 		def del_val(x,y):
-			del_val  = c_1*(np.linalg.norm(x)^2+1)*x +y
-			return del_val
-		
+			del_val = c_1*((np.linalg.norm(x)*np.linalg.norm(x))+1)*x + y
 
+			return del_val
 
 
 		# dual update step
@@ -182,16 +181,17 @@ def make_update_new(y, grad, uL_est, option=0):
 			c_3 = del_val(x_1 - tau*K.T.dot(p), y)
 			c_3 = prox_L1(c_3, lam*tau)
 
-
 			temp_pnorm = np.linalg.norm(c_3)**2
-			coeff = [c_3*c_1, 0, c_2, -1]
+			coeff = [temp_pnorm*c_1, 0, c_2, -1]
+
 			temp_y = np.roots(coeff)[-1].real
 
 			x_1 = temp_y*c_3
 		else:
 			x_1 = prox_squared_L2(0.5*(x_1 - tau*K.T.dot(p)) + 0.5*(y), lam*tau)
 
-		# print('Objective '+ str(internal_objective(x_1,y, tau)) + ' tau ' + str(tau))
+		print('Objective ' + str(internal_objective(x_1, y, (0.9/uL_est))) +
+		      ' tau ' + str((0.9/uL_est)))
 		# TODO: Internal objective not giving zero objective when
 
 	return x_1
@@ -464,7 +464,10 @@ if algo == 3:
 		uL_est = global_L
 		grad_u = grad(A, b, U, lam, fun_num=fun_num)
 		if fun_num == 1:
-			U = make_update(U, grad_u, uL_est)
+			if abs_fun_num == 3:
+				U = make_update_new(U, grad_u, uL_est)
+			else:
+				U = make_update(U, grad_u, uL_est)
 		elif fun_num == 2:
 			U = make_update1(U, grad_u, uL_est)
 		else:
