@@ -102,7 +102,7 @@ labels_dict = {
 		}
 
 nb_epoch = 1000
-opt_vals= np.array([1,5,2,3,4])
+opt_vals= np.array([2,3,4])
 
 color_count = 0
 

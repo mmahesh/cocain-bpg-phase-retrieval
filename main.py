@@ -102,6 +102,101 @@ if fun_num == 2:
 lL_est_main = lL_est
 
 
+def prox_onto_cube(x):
+	return np.maximum(-1.0,np.minimum(1.0,x))
+
+def prox_L1(x, tau):
+	return np.maximum(0, np.abs(x)-tau)*np.sign(x)
+
+
+def prox_squared_L2(x, tau):
+	return x/(1+tau)
+
+def make_update_new(y, grad, uL_est, option=0):
+	# option=0 => L1 Regularization
+	# option=1 => L2 Regularization
+	
+	# Bregman Proximal Mapping with L1 Regularization
+	# Probably requires PDHG algorithm/ADMM (and depends on its parameters)
+
+	# global variable lam is used.
+	
+	# y is actually x^k
+
+	# Subproblem objective  
+	# TODO: Check once more
+	def internal_objective(x,y, tau):	
+		# Model around y			
+		return abs_func(A, b, x, y, lam, abs_fun_num=abs_fun_num, fun_num=fun_num)\
+                    + ((0.5/tau)*breg(x, y, breg_num=breg_num))
+
+	# Constructing K.
+
+	# TODO: Here I am using 100 as default setting make it general
+	K = np.zeros((len(y), 100)) # TODO: Should be K^T
+	temp_b_2 = np.zeros_like(b) # tilde b
+	
+	count = 0
+	for item in A:
+		temp_x_val = 2*item.dot(y)*(y.T.dot(item.dot(y)) - b[count])
+		K[:, count] = temp_x_val
+		temp_b_2[count] = (y.T.dot(item.dot(y)) - b[count])**2 - \
+                    ((temp_x_val.dot(y))*(y.T.dot(item.dot(y)) - b[count]))
+		count+=1
+	
+	K = K.T
+	# param value
+	L_pdhg = np.linalg.norm(K)
+	tau = 2000/L_pdhg
+	sigma = 0.99/(L_pdhg*2000)
+
+	# primal variables
+	x_1 = y.copy()
+	x_hat = x_1.copy()
+
+	# dual variables
+	p = np.zeros_like(b)
+
+	max_sub_iter = 1000
+	for iter in range(max_sub_iter):
+		# tau
+
+		c_1 = tau/(0.9/uL_est)
+		c_2 = c_1 + 1
+
+		def del_val(x,y):
+			del_val  = c_1*(np.linalg.norm(x)^2+1)*x +y
+			return del_val
+		
+
+
+
+		# dual update step
+		vec_2 = sigma*K.dot(2*x_1 - x_hat)
+		p = prox_onto_cube(p+vec_2+sigma*temp_b_2)
+		
+		x_hat = x_1.copy()
+
+		if option == 0:
+			# primal update step
+			c_3 = del_val(x_1 - tau*K.T.dot(p), y)
+			c_3 = prox_L1(c_3, lam*tau)
+
+
+			temp_pnorm = np.linalg.norm(c_3)**2
+			coeff = [c_3*c_1, 0, c_2, -1]
+			temp_y = np.roots(coeff)[-1].real
+
+			x_1 = temp_y*c_3
+		else:
+			x_1 = prox_squared_L2(0.5*(x_1 - tau*K.T.dot(p)) + 0.5*(y), lam*tau)
+
+		# print('Objective '+ str(internal_objective(x_1,y, tau)) + ' tau ' + str(tau))
+		# TODO: Internal objective not giving zero objective when
+
+	return x_1
+
+
 def make_update(y, grad, uL_est):
 	# Bregman Proximal Mapping with L1 Regularization
 
@@ -350,6 +445,7 @@ if algo == 2:
 	filename = 'results/gd_bt_' + \
 		str(fun_num)+'_abs_fun_num_'+str(abs_fun_num)+'.txt'
 	np.savetxt(filename, np.c_[func_vals,  time_vals, uL_est_vals])
+
 if algo == 3:
 	# Implementation of BPG without backtracking
 	# Here global_L governs the step-size
