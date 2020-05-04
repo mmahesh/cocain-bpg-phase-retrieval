@@ -32,7 +32,7 @@ def main_func(A,b, U, lam, fun_num=1):
 
 		return temp_sum
 
-	
+
 
 def grad(A,b, U,  lam, fun_num=1):
 	if fun_num==1:
